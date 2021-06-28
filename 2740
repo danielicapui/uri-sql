@@ -1,0 +1,27 @@
+drop table if exists league;
+create table league
+(
+	position numeric,
+	team varchar(50)
+);
+insert into league(position,team)
+values
+	(1,'The Quack Bats'),
+	(2,'The Responsible Hornets'),
+	(3,'The Bawdy Dolphins'),
+	(13,'The Big Chargers'),
+	(14,'The Rough Robins'),
+	(15,'The Silver Crocs');
+  
+--search acepted1
+select 'Podium: '||league.team as name from league
+where league.position in(1,2,3)
+union all 
+select 'Demoted: '||league.team from league
+where league.position>=(select max(league.position)  from league)-1
+--search acepted 2
+select concat('Podium: ', league.team) as name from league
+where league.position<=(select min(league.position)  from league)+2
+union all 
+select concat('Demoted: ', league.team ) as name from league
+where league.position>=(select max(league.position)  from league)-1
